@@ -2,8 +2,8 @@
   (
     :require [monger.core :as mg]
              [monger.collection :as mc]
-    )
-  )
+             )
+  (:import (org.bson.types ObjectId)))
 
 (def db-connection-uri (or (System/getenv "CLJBLOGURI")
                            "mongodb://127.0.0.1/cljblog"
@@ -26,4 +26,8 @@
 
 (defn list-articles []
   (mc/find-maps db article-coll)
+  )
+
+(defn get-article-by-id [article-id]
+  (mc/find-map-by-id db article-coll (ObjectId. article-id))
   )
